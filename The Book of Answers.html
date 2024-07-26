@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>答案之书</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 3vw 5vw;
+            max-width: 60vw;
+            max-height: 70vh;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s;
+            overflow: hidden;
+            color: #fff;
+        }
+        .container.shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+        }
+        #textBox {
+            width: 100%;
+            height: 6vw;
+            margin-bottom: 2vw;
+            font-size: 2vw;
+            text-align: center;
+            padding: 1vw;
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+            resize: none;
+            box-sizing: border-box;
+        }
+        #btn {
+            padding: 1vw 2vw;
+            font-size: 1.5vw;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #4b79a1, #283e51);
+            color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+        #btn:hover {
+            background: linear-gradient(145deg, #283e51, #4b79a1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        #btn:active {
+            background: #2a4d69;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transform: translateY(2px);
+        }
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: #ffffff;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: particleAnimation 6s ease-in-out infinite;
+        }
+        @keyframes particleAnimation {
+            0%, 100% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(2);
+                opacity: 0.2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="container" id="container">
+        <textarea id="textBox" readonly aria-label="答案框"></textarea><br>
+        <button id="btn" aria-label="获取新答案">你的答案在这里</button>
+    </div>
+
+    <script>
+        const responses = [
+            "是的，绝对是。",
+            "不可能。",
+            "稍后再试。",
+            "绝对可以。",
+            "没有机会。",
+            "是的，但要小心。",
+            "现在时机不对。",
+            "绝对不行。",
+            "是的，如果你相信。",
+            "问问别人。",
+            "小心进行。",
+            "这不确定。",
+            "是的，这是你的命运。",
+            "不，还是不行。",
+            "相信你的直觉。",
+            "也许，但要小心。",
+            "是的，但不是现在。",
+            "由你决定。",
+            "今天不行。",
+            "考虑其他选项。",
+            "可能是的。",
+            "再试一次。",
+            "无法预测。",
+            "很难说。",
+            "看看其他因素。",
+            "有一点希望。",
+            "可能会有惊喜。",
+            "暂时不行。",
+            "未来可能会好转。",
+            "不如你所想。",
+            "尝试新的方法。",
+            "有可能的。",
+            "最好谨慎。",
+            "做出自己的决定。",
+            "事情会变好的。",
+            "有希望。",
+            "可以试试。",
+            "要有耐心。",
+            "听从自己的感觉。",
+            "情况不佳。",
+            "考虑重新评估。",
+            "不确定，继续努力。"
+        ];
+
+        const btn = document.getElementById('btn');
+        const textBox = document.getElementById('textBox');
+        const container = document.getElementById('container');
+
+        btn.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * responses.length);
+            const randomResponse = responses[randomIndex];
+            textBox.value = randomResponse;
+            container.classList.add('shake');
+            setTimeout(() => {
+                container.classList.remove('shake');
+            }, 500);
+        });
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const numParticles = 150; // 优化后的粒子数量
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
