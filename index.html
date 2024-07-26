@@ -99,6 +99,13 @@
                 opacity: 0.2;
             }
         }
+        /* 针对小屏幕设备的调整 */
+        @media (max-width: 768px) {
+            #textBox {
+                background-color: rgba(255, 255, 255, 0.8); /* 增加不透明度 */
+                color: #000; /* 更高对比度的文字颜色 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -187,6 +194,7 @@
     </script>
 </body>
 </html>
+
 
 
 
