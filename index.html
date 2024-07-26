@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>答案之书</title>
+    <title>Book of Answers</title>
     <style>
         body {
             display: flex;
@@ -24,9 +24,12 @@
             max-height: 70vh;
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.3s;
             overflow: hidden;
             color: #fff;
+        }
+        .container:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
         .container.shake {
             animation: shake 0.5s ease-in-out;
@@ -51,6 +54,10 @@
             box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
             resize: none;
             box-sizing: border-box;
+            transition: background-color 0.3s;
+        }
+        #textBox:focus {
+            background-color: rgba(255, 255, 255, 0.4);
         }
         #btn {
             padding: 1vw 2vw;
@@ -61,11 +68,12 @@
             background: linear-gradient(145deg, #4b79a1, #283e51);
             color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
+            transition: all 0.3s, transform 0.2s;
         }
         #btn:hover {
             background: linear-gradient(145deg, #283e51, #4b79a1);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
         }
         #btn:active {
             background: #2a4d69;
@@ -80,6 +88,9 @@
             height: 100%;
             pointer-events: none;
             overflow: hidden;
+            background: linear-gradient(transparent, rgba(255,255,255,0.1));
+            mask-image: radial-gradient(circle at center, transparent, black);
+            animation: fadein 2s ease-out;
         }
         .particle {
             position: absolute;
@@ -87,7 +98,7 @@
             background: #ffffff;
             opacity: 0.8;
             pointer-events: none;
-            animation: particleAnimation 6s ease-in-out infinite;
+            animation: particleAnimation 8s ease-in-out infinite, twinkling 2s ease-in-out infinite alternate;
         }
         @keyframes particleAnimation {
             0%, 100% {
@@ -99,11 +110,18 @@
                 opacity: 0.2;
             }
         }
-        /* 针对小屏幕设备的调整 */
+        @keyframes twinkling {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+        @keyframes fadein {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
         @media (max-width: 768px) {
             #textBox {
-                background-color: rgba(255, 255, 255, 0.8); /* 增加不透明度 */
-                color: #000; /* 更高对比度的文字颜色 */
+                background-color: rgba(255, 255, 255, 0.8);
+                color: #000;
             }
         }
     </style>
@@ -111,54 +129,54 @@
 <body>
     <div class="particles" id="particles"></div>
     <div class="container" id="container">
-        <textarea id="textBox" readonly aria-label="答案框"></textarea><br>
-        <button id="btn" aria-label="获取新答案">你的答案在这里</button>
+        <textarea id="textBox" readonly aria-label="Answer box"></textarea><br>
+        <button id="btn" aria-label="Get a new answer">Your Answer is Here</button>
     </div>
 
     <script>
         const responses = [
-            "是的，绝对是。",
-            "不可能。",
-            "稍后再试。",
-            "绝对可以。",
-            "没有机会。",
-            "是的，但要小心。",
-            "现在时机不对。",
-            "绝对不行。",
-            "是的，如果你相信。",
-            "问问别人。",
-            "小心进行。",
-            "这不确定。",
-            "是的，这是你的命运。",
-            "不，还是不行。",
-            "相信你的直觉。",
-            "也许，但要小心。",
-            "是的，但不是现在。",
-            "由你决定。",
-            "今天不行。",
-            "考虑其他选项。",
-            "可能是的。",
-            "再试一次。",
-            "无法预测。",
-            "很难说。",
-            "看看其他因素。",
-            "有一点希望。",
-            "可能会有惊喜。",
-            "暂时不行。",
-            "未来可能会好转。",
-            "不如你所想。",
-            "尝试新的方法。",
-            "有可能的。",
-            "最好谨慎。",
-            "做出自己的决定。",
-            "事情会变好的。",
-            "有希望。",
-            "可以试试。",
-            "要有耐心。",
-            "听从自己的感觉。",
-            "情况不佳。",
-            "考虑重新评估。",
-            "不确定，继续努力。"
+            "Yes, absolutely.",
+            "No way.",
+            "Try again later.",
+            "Definitely.",
+            "No chance.",
+            "Yes, but be careful.",
+            "Now is not the time.",
+            "Absolutely not.",
+            "Yes, if you believe.",
+            "Ask someone else.",
+            "Proceed with caution.",
+            "It's uncertain.",
+            "Yes, it's your destiny.",
+            "No, still no.",
+            "Trust your instincts.",
+            "Maybe, but be cautious.",
+            "Yes, but not now.",
+            "It's up to you.",
+            "Not today.",
+            "Consider other options.",
+            "It could be.",
+            "Try again.",
+            "Cannot predict now.",
+            "Hard to say.",
+            "Look at other factors.",
+            "There is a glimmer of hope.",
+            "There might be a surprise.",
+            "Not for now.",
+            "Things might get better.",
+            "Not as you think.",
+            "Try a new approach.",
+            "It's possible.",
+            "Better be cautious.",
+            "Make your own decision.",
+            "Things will get better.",
+            "There is hope.",
+            "You can try.",
+            "Be patient.",
+            "Listen to your feelings.",
+            "Not looking good.",
+            "Consider reevaluating.",
+            "Uncertain, keep trying."
         ];
 
         const btn = document.getElementById('btn');
@@ -177,7 +195,7 @@
 
         function createParticles() {
             const container = document.getElementById('particles');
-            const numParticles = 150; // 优化后的粒子数量
+            const numParticles = 150;
             for (let i = 0; i < numParticles; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -194,6 +212,7 @@
     </script>
 </body>
 </html>
+
 
 
 
